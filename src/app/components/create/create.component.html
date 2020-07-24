@@ -1,0 +1,69 @@
+<div class="container" *ngIf="project">
+    <h2>{{title}}</h2>
+
+    <div class="message success" *ngIf="status == 'success'">
+        Work art created, you can see it here: <a [routerLink]="['/proyecto',save_project._id]">see</a>
+    </div>
+
+    <div class="message failed" *ngIf="status == 'failed'">
+        Work art could not be created
+    </div>
+
+    <form #projectForm="ngForm" (ngSubmit)="onSubmit(projectForm)">
+        <p>
+            <label for="name">Name: </label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="project.name" required>
+            <br>
+            <span class="form_error" *ngIf="name.touched && !name.valid">
+                You must write workart name
+            </span>
+        </p>
+
+        <p>
+            <label for="name">Description: </label>
+            <textarea name="description" #description="ngModel" [(ngModel)]="project.description" required></textarea>
+            <br>
+            <span class="form_error" *ngIf="description.touched && !description.valid">
+               You must write description
+            </span>
+        </p>
+
+        <p>
+            <label for="category">Category: </label>
+            <input type="text" name="category" #category="ngModel" [(ngModel)]="project.category" required>
+            <br>
+            <span class="form_error" *ngIf="category.touched && !category.valid">
+                You must write category
+            </span>
+        </p>
+
+        <p>
+            <label for="year">Release year: </label>
+            <input type="number" name="year" #year="ngModel" [(ngModel)]="project.year">
+    
+        </p>
+
+        <p>
+            <label for="langs">Place: </label>
+            <input type="text" name="langs" #langs="ngModel" [(ngModel)]="project.langs" required>
+            <br>
+            <span class="form_error" *ngIf="langs.touched && !langs.valid">
+                You must write place
+            </span>
+        </p>
+
+        <p>
+            <label for="image">Work Art Image: </label>
+                <span class="image" *ngIf="project.image" style="float:none;">
+                    <img src="{{url+'get-image/'+project.image}}" style="width:100px;">
+                </span><br>
+            <input type="file" name="image" placeholder="Subir imagen" (change)="fileChangeEvent($event)">
+        </p>
+
+        <input type="submit" value="Upload" [disabled]="!projectForm.form.valid">
+
+    </form>
+
+</div>
+
+
